@@ -4,746 +4,282 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#2C2E5F" />
-  <meta name="description" content="Nina Comunica – Sua Unidade Básica de Saúde mais perto de você. Informações sobre horários, serviços, campanhas e autocuidado da UBS Nina Liberato." />
-
-  <!-- PWA -->
+  <meta name="description" content="Nina Comunica – Sua Unidade Básica de Saúde mais perto de você." />
   <link rel="manifest" href="/public/manifest.json" />
   <link rel="apple-touch-icon" href="/public/icons/icon-192.png" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="Nina Comunica" />
-
   <title>Nina Comunica – UBS Nina Liberato</title>
-
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Nunito+Sans:wght@400;600&display=swap" rel="stylesheet" />
-
   <style>
-    /* ============================================================
-       TOKENS
-    ============================================================ */
     :root {
-      --azul:   #2C2E5F;
-      --azul-m: #3D3F7A;
-      --verde:  #00C4AE;
-      --verde-m:#00A594;
-      --verm:   #FF4553;
-      --branco: #ffffff;
-      --cinza:  #F5F6FA;
-      --texto:  #1A1A2E;
-      --sub:    #5A5C7A;
+      --azul:#2C2E5F; --azul-m:#3D3F7A; --verde:#00C4AE; --verde-m:#00A594;
+      --verm:#FF4553; --branco:#ffffff; --cinza:#F5F6FA; --texto:#1A1A2E; --sub:#5A5C7A;
+      --r-sm:12px; --r-md:20px; --r-lg:28px;
+      --shadow:0 4px 20px rgba(44,46,95,.10);
+      --ff-t:'Nunito',sans-serif; --ff-b:'Nunito Sans',sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--ff-b);background:var(--branco);color:var(--texto);line-height:1.6;
+      padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+    img{max-width:100%;display:block} a{color:inherit;text-decoration:none} ul{list-style:none}
 
-      --r-sm: 12px;
-      --r-md: 20px;
-      --r-lg: 28px;
+    /* ── HEADER ── */
+    header{background:var(--branco);border-bottom:2px solid var(--cinza);position:sticky;
+      top:env(safe-area-inset-top,0px);z-index:100;padding:0 1.5rem}
+    .nav-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;
+      justify-content:space-between;height:64px;gap:1rem}
+    .logo{display:flex;align-items:center;gap:.6rem}
+    .logo img{height:42px;width:auto}
+    .logo-txt{font-family:var(--ff-t);font-weight:800;font-size:1.2rem;color:var(--azul);line-height:1.1}
+    .logo-txt span{display:block;font-size:.65rem;font-weight:600;color:var(--sub);letter-spacing:.03em}
+    nav.desktop{display:flex;gap:.25rem}
+    nav.desktop a{font-family:var(--ff-t);font-weight:700;font-size:.82rem;color:var(--azul);
+      padding:.45rem .75rem;border-radius:var(--r-sm);transition:background .15s}
+    nav.desktop a:hover{background:var(--cinza)}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:.5rem;border:none;background:none}
+    .hamburger span{display:block;width:24px;height:2.5px;background:var(--azul);border-radius:2px}
+    .mobile-menu{display:none;flex-direction:column;background:var(--branco);
+      padding:1rem 1.5rem 1.5rem;border-top:1px solid var(--cinza);gap:.5rem}
+    .mobile-menu.aberto{display:flex}
+    .mobile-menu a{font-family:var(--ff-t);font-weight:700;font-size:1rem;color:var(--azul);
+      padding:.7rem .75rem;border-radius:var(--r-sm)}
+    .mobile-menu a:hover{background:var(--cinza)}
 
-      --shadow: 0 4px 20px rgba(44,46,95,.10);
+    /* ── HERO ── */
+    .hero{color:var(--branco);padding:4.5rem 1.5rem 5rem;text-align:center;position:relative;overflow:hidden;background:var(--azul)}
+    .hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
+    .hero::before{content:'';position:absolute;inset:0;z-index:1;
+      background:linear-gradient(135deg,rgba(44,46,95,.82) 0%,rgba(44,46,95,.68) 50%,rgba(0,165,148,.55) 100%);pointer-events:none}
+    .hero-inner{max-width:680px;margin:0 auto;position:relative;z-index:2}
+    .hero img.hero-logo{height:76px;width:auto;margin:0 auto 1.25rem;filter:drop-shadow(0 2px 12px rgba(0,0,0,.35))}
+    .hero h1{font-family:var(--ff-t);font-size:clamp(1.8rem,5vw,2.6rem);font-weight:800;line-height:1.2;
+      margin-bottom:.75rem;color:var(--branco);text-shadow:0 2px 12px rgba(0,0,0,.3)}
+    .hero h1 strong{color:var(--verde)}
+    .hero p{font-size:1.05rem;color:rgba(255,255,255,.92);max-width:500px;margin:0 auto 2rem;text-shadow:0 1px 6px rgba(0,0,0,.25)}
+    .hero-btns{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center}
+    .btn{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--ff-t);font-weight:700;
+      font-size:.95rem;padding:.75rem 1.5rem;border-radius:999px;cursor:pointer;
+      transition:transform .15s,box-shadow .15s;border:none}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.15)}
+    .btn-verde{background:var(--verde);color:var(--branco)}
+    .btn-outline{background:transparent;color:var(--branco);border:2px solid rgba(255,255,255,.5)}
+    .btn-outline:hover{border-color:var(--branco)}
 
-      --ff-titulo: 'Nunito', sans-serif;
-      --ff-corpo:  'Nunito Sans', sans-serif;
-    }
+    /* ── CARROSSEL ACESSO RÁPIDO ── */
+    .acesso-rapido{background:var(--azul);padding:2.5rem 1.5rem}
+    .sec-titulo{font-family:var(--ff-t);font-size:1.3rem;font-weight:800;color:var(--branco);text-align:center;margin-bottom:1.25rem}
+    .carrossel-wrapper{position:relative;max-width:900px;margin:0 auto}
+    .carrossel-track{display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;padding-bottom:.5rem;scrollbar-width:none}
+    .carrossel-track::-webkit-scrollbar{display:none}
+    .card-icone{flex:0 0 140px;scroll-snap-align:start;background:rgba(255,255,255,.10);
+      border:1.5px solid rgba(255,255,255,.18);border-radius:var(--r-md);padding:1.25rem .75rem;
+      text-align:center;cursor:pointer;transition:transform .15s,background .15s;
+      text-decoration:none;color:var(--branco);display:flex;flex-direction:column;align-items:center;gap:.6rem}
+    .card-icone:hover{transform:translateY(-3px);background:rgba(255,255,255,.18)}
+    .card-icone:hover .icone-circulo{background:var(--verde);border-color:var(--verde);color:var(--azul)}
+    .icone-circulo{width:56px;height:56px;border-radius:50%;border:2px solid rgba(0,196,174,.5);
+      display:flex;align-items:center;justify-content:center;background:rgba(0,196,174,.12);
+      color:var(--verde);transition:background .15s,border-color .15s}
+    .icone-circulo svg{width:24px;height:24px;flex-shrink:0}
+    .card-icone strong{font-family:var(--ff-t);font-weight:700;font-size:.82rem;color:var(--branco);line-height:1.2}
+    .carrossel-btn{position:absolute;top:50%;transform:translateY(-50%);
+      background:rgba(255,255,255,.2);border:none;border-radius:50%;width:36px;height:36px;
+      display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--branco);
+      font-size:1.1rem;transition:background .15s;z-index:2}
+    .carrossel-btn:hover{background:rgba(255,255,255,.35)}
+    .carrossel-btn.prev{left:-18px} .carrossel-btn.next{right:-18px}
+    .carrossel-dots{display:flex;justify-content:center;gap:.4rem;margin-top:.75rem}
+    .carrossel-dots span{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.3);transition:background .2s}
+    .carrossel-dots span.ativo{background:var(--verde);width:18px;border-radius:3px}
 
-    /* ============================================================
-       RESET
-    ============================================================ */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: var(--ff-corpo);
-      background: var(--branco);
-      color: var(--texto);
-      line-height: 1.6;
-      padding-top: env(safe-area-inset-top, 0px);
-      padding-bottom: env(safe-area-inset-bottom, 0px);
-    }
-    img { max-width: 100%; display: block; }
-    a { color: inherit; text-decoration: none; }
-    ul { list-style: none; }
+    /* ── SEÇÕES GERAIS ── */
+    section{padding:3rem 1.5rem;background:var(--branco)}
+    section.sec-azul{background:var(--azul)}
+    section.sec-verde{background:var(--verde)}
+    section.sec-azul .sec-header h2,section.sec-azul .sec-header p{color:var(--branco)}
+    section.sec-azul .sec-header .icone-sec{background:rgba(255,255,255,.18)}
+    section.sec-verde .sec-header h2{color:var(--azul)}
+    section.sec-verde .sec-header p{color:rgba(44,46,95,.75)}
+    section.sec-verde .sec-header .icone-sec{background:var(--azul)}
+    .sec-inner{max-width:860px;margin:0 auto}
+    .sec-header{display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem}
+    .sec-header .icone-sec{width:44px;height:44px;border-radius:var(--r-sm);background:var(--azul);
+      color:var(--branco);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+    .sec-header h2{font-family:var(--ff-t);font-size:1.3rem;font-weight:800;color:var(--azul)}
+    .sec-header p{font-size:.85rem;color:var(--sub)}
 
-    /* ============================================================
-       HEADER / NAV
-    ============================================================ */
-    header {
-      background: var(--branco);
-      border-bottom: 2px solid var(--cinza);
-      position: sticky;
-      top: env(safe-area-inset-top, 0px);
-      z-index: 100;
-      padding: 0 1.5rem;
-    }
-    .nav-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 64px;
-      gap: 1rem;
-    }
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: .6rem;
-    }
-    .logo img {
-      height: 42px;
-      width: auto;
-    }
-    .logo-txt {
-      font-family: var(--ff-titulo);
-      font-weight: 800;
-      font-size: 1.2rem;
-      color: var(--azul);
-      line-height: 1.1;
-    }
-    .logo-txt span {
-      display: block;
-      font-size: .65rem;
-      font-weight: 600;
-      color: var(--sub);
-      letter-spacing: .03em;
-    }
+    /* ── HORÁRIOS ── */
+    .tabela-horarios{width:100%;border-collapse:collapse;border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow)}
+    .tabela-horarios thead{background:var(--azul);color:var(--branco)}
+    .tabela-horarios th,.tabela-horarios td{padding:.9rem 1.1rem;text-align:left;font-size:.9rem}
+    .tabela-horarios th{font-family:var(--ff-t);font-weight:700}
+    .tabela-horarios tbody tr{background:var(--branco)}
+    .tabela-horarios tbody tr:nth-child(even){background:#EFF0F8}
+    .tabela-horarios td{color:var(--texto)}
+    .badge{display:inline-block;padding:.2rem .6rem;border-radius:999px;font-size:.75rem;font-weight:700;font-family:var(--ff-t)}
+    .badge-verde{background:rgba(0,196,174,.15);color:var(--verde-m)}
 
-    /* nav links – desktop */
-    nav { display: flex; gap: .25rem; }
-    nav a {
-      font-family: var(--ff-titulo);
-      font-weight: 700;
-      font-size: .82rem;
-      color: var(--azul);
-      padding: .45rem .75rem;
-      border-radius: var(--r-sm);
-      transition: background .15s;
-    }
-    nav a:hover { background: var(--cinza); }
-    nav a.ativo { background: var(--verde); color: var(--branco); }
+    /* ── SERVIÇOS ── */
+    .grid-servicos{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem}
+    .card-servico{background:rgba(255,255,255,.10);border:1.5px solid rgba(255,255,255,.18);
+      border-radius:var(--r-md);padding:1.25rem 1.25rem 1rem;border-left:4px solid var(--verde)}
+    .card-servico h3{font-family:var(--ff-t);font-weight:700;font-size:.95rem;color:var(--branco);margin-bottom:.4rem}
+    .card-servico p{font-size:.85rem;color:rgba(255,255,255,.75);line-height:1.5}
+    .card-servico.oculto{display:none}
+    .btn-ver-mais{display:block;margin:1.25rem auto 0;font-family:var(--ff-t);font-weight:700;
+      font-size:.9rem;padding:.65rem 1.75rem;border-radius:999px;border:2px solid var(--verde);
+      color:var(--verde);background:transparent;cursor:pointer;transition:background .15s,color .15s}
+    .btn-ver-mais:hover{background:var(--verde);color:var(--branco)}
 
-    /* hamburger – mobile */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      padding: .5rem;
-      border: none;
-      background: none;
-    }
-    .hamburger span {
-      display: block;
-      width: 24px;
-      height: 2.5px;
-      background: var(--azul);
-      border-radius: 2px;
-      transition: .2s;
-    }
+    /* ── CAMPANHAS ── */
+    .lista-campanhas{display:flex;flex-direction:column;gap:.75rem}
+    .item-campanha{background:var(--branco);border-radius:var(--r-md);padding:1rem 1.25rem;
+      box-shadow:0 4px 16px rgba(44,46,95,.08);border-left:4px solid var(--verde);display:flex;align-items:flex-start;gap:1rem}
+    .data-campanha{flex-shrink:0;background:var(--verde);color:var(--branco);border-radius:var(--r-sm);width:54px;text-align:center;padding:.4rem .2rem}
+    .data-campanha .dia{font-family:var(--ff-t);font-weight:800;font-size:1.3rem;line-height:1}
+    .data-campanha .mes{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;opacity:.8}
+    .info-campanha h3{font-family:var(--ff-t);font-weight:700;font-size:.95rem;color:var(--azul);margin-bottom:.2rem}
+    .info-campanha p{font-size:.85rem;color:var(--sub)}
 
-    /* mobile menu */
-    .mobile-menu {
-      display: none;
-      flex-direction: column;
-      background: var(--branco);
-      padding: 1rem 1.5rem 1.5rem;
-      border-top: 1px solid var(--cinza);
-      gap: .5rem;
-    }
-    .mobile-menu.aberto { display: flex; }
-    .mobile-menu a {
-      font-family: var(--ff-titulo);
-      font-weight: 700;
-      font-size: 1rem;
-      color: var(--azul);
-      padding: .7rem .75rem;
-      border-radius: var(--r-sm);
-    }
-    .mobile-menu a:hover { background: var(--cinza); }
+    /* ── AGENDAS ── */
+    .agenda-abas{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+    .agenda-aba{font-family:var(--ff-t);font-weight:700;font-size:.85rem;padding:.5rem 1rem;
+      border-radius:999px;border:2px solid rgba(255,255,255,.3);color:rgba(255,255,255,.7);
+      background:transparent;cursor:pointer;transition:all .15s}
+    .agenda-aba.ativa,.agenda-aba:hover{background:var(--verde);border-color:var(--verde);color:var(--branco)}
+    .agenda-painel{display:none}
+    .agenda-painel.ativo{display:block}
+    .agenda-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+    .agenda-card{background:var(--branco);border:1.5px solid rgba(44,46,95,.1);
+      border-radius:var(--r-md);padding:1.25rem;border-top:3px solid var(--verde);
+      box-shadow:0 4px 16px rgba(0,0,0,.08)}
+    .agenda-card .dia-semana{font-family:var(--ff-t);font-weight:800;font-size:.8rem;
+      color:var(--verde-m);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem}
+    .agenda-card .turno{font-family:var(--ff-t);font-weight:700;font-size:.75rem;
+      color:var(--branco);background:var(--azul);display:inline-block;
+      padding:.18rem .65rem;border-radius:999px;margin-top:.75rem;margin-bottom:.35rem}
+    .agenda-card .atividade{font-size:.88rem;color:var(--azul);line-height:1.5;font-weight:600;
+      border-left:3px solid var(--verde);padding-left:.6rem;margin-bottom:.1rem}
+    .agenda-card .horario-badge{display:inline-block;background:rgba(0,196,174,.12);
+      color:var(--verde-m);font-size:.75rem;font-weight:700;padding:.15rem .5rem;border-radius:999px;margin-bottom:.4rem}
 
-    /* ============================================================
-       HERO
-    ============================================================ */
-    .hero {
-      color: var(--branco);
-      padding: 4.5rem 1.5rem 5rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-      background: var(--azul);
-    }
-    /* imagem de fundo via <img> posicionada absolutamente */
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      z-index: 0;
-      display: block;
-    }
-    /* camada de overlay sobre a imagem */
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      background: linear-gradient(
-        135deg,
-        rgba(44,46,95,.82) 0%,
-        rgba(44,46,95,.68) 50%,
-        rgba(0,165,148,.55) 100%
-      );
-      pointer-events: none;
-    }
-    .hero-inner {
-      max-width: 680px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 2;
-    }
-    .hero img.hero-logo {
-      height: 76px;
-      width: auto;
-      margin: 0 auto 1.25rem;
-      filter: drop-shadow(0 2px 12px rgba(0,0,0,.35));
-    }
-    .hero h1 {
-      font-family: var(--ff-titulo);
-      font-size: clamp(1.8rem, 5vw, 2.6rem);
-      font-weight: 800;
-      line-height: 1.2;
-      margin-bottom: .75rem;
-      color: var(--branco);
-      text-shadow: 0 2px 12px rgba(0,0,0,.3);
-    }
-    .hero h1 strong { color: var(--verde); }
-    .hero p {
-      font-size: 1.05rem;
-      color: rgba(255,255,255,.92);
-      max-width: 500px;
-      margin: 0 auto 2rem;
-      text-shadow: 0 1px 6px rgba(0,0,0,.25);
-    }
-    .hero-btns {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .75rem;
-      justify-content: center;
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: .5rem;
-      font-family: var(--ff-titulo);
-      font-weight: 700;
-      font-size: .95rem;
-      padding: .75rem 1.5rem;
-      border-radius: 999px;
-      cursor: pointer;
-      transition: transform .15s, box-shadow .15s;
-      border: none;
-    }
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.15); }
-    .btn-verde { background: var(--verde); color: var(--branco); }
-    .btn-outline { background: transparent; color: var(--branco); border: 2px solid rgba(255,255,255,.5); }
-    .btn-outline:hover { border-color: var(--branco); }
+    /* ── ACS ── */
+    .grid-acs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
+    .card-acs{background:var(--branco);border-radius:var(--r-md);padding:1.5rem 1.25rem;
+      box-shadow:var(--shadow);border-top:4px solid var(--verde)}
+    .card-acs .acs-avatar{width:52px;height:52px;border-radius:50%;background:var(--azul);
+      color:var(--branco);font-family:var(--ff-t);font-weight:800;font-size:1.2rem;
+      display:flex;align-items:center;justify-content:center;margin-bottom:.75rem}
+    .card-acs h3{font-family:var(--ff-t);font-weight:800;font-size:.95rem;color:var(--azul);margin-bottom:.2rem}
+    .card-acs .acs-area{font-size:.8rem;color:var(--sub);margin-bottom:.6rem;line-height:1.5}
+    .card-acs a{display:inline-flex;align-items:center;gap:.35rem;font-family:var(--ff-t);
+      font-weight:700;font-size:.85rem;color:var(--verde-m)}
+    .card-acs a svg{width:14px;height:14px}
 
-    /* ============================================================
-       ACESSO RÁPIDO (ícones grandes)
-    ============================================================ */
-    .acesso-rapido {
-      background: var(--azul);
-      padding: 2.5rem 1.5rem;
-    }
-    .sec-titulo {
-      font-family: var(--ff-titulo);
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: var(--branco);
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-    .grid-icones {
-      max-width: 860px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 1rem;
-    }
-    .card-icone {
-      background: rgba(255,255,255,.10);
-      border: 1.5px solid rgba(255,255,255,.18);
-      border-radius: var(--r-md);
-      padding: 1.5rem 1rem;
-      text-align: center;
-      cursor: pointer;
-      transition: transform .15s, background .15s, box-shadow .15s;
-      text-decoration: none;
-      color: var(--branco);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: .6rem;
-    }
-    .card-icone:hover { transform: translateY(-3px); background: rgba(255,255,255,.18); box-shadow: 0 8px 28px rgba(0,0,0,.2); }
-    .card-icone .icone-circulo {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      border: 2px solid rgba(0,196,174,.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0,196,174,.12);
-      color: var(--verde);
-      transition: background .15s, border-color .15s;
-    }
-    .card-icone:hover .icone-circulo {
-      background: var(--verde);
-      border-color: var(--verde);
-      color: var(--azul);
-    }
-    .card-icone .icone-circulo svg {
-      width: 26px;
-      height: 26px;
-      flex-shrink: 0;
-    }
-    .card-icone strong {
-      font-family: var(--ff-titulo);
-      font-weight: 700;
-      font-size: .9rem;
-      color: var(--branco);
-      line-height: 1.2;
-    }
+    /* ── INFORMES (carrossel de imagens) ── */
+    .informes-track{display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;padding-bottom:.5rem;scrollbar-width:none}
+    .informes-track::-webkit-scrollbar{display:none}
+    .informe-card{flex:0 0 280px;scroll-snap-align:start;border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow)}
+    .informe-card img{width:100%;height:200px;object-fit:cover;display:block}
+    .informe-card .informe-leg{padding:.6rem .75rem;background:var(--branco)}
+    .informe-card .informe-leg p{font-size:.82rem;color:var(--sub);line-height:1.4}
 
-    /* ============================================================
-       SEÇÕES GERAIS
-    ============================================================ */
-    section { padding: 3rem 1.5rem; background: var(--branco); }
-    section.sec-azul { background: var(--azul); }
-    section.sec-verde { background: var(--verde); }
-    section.sec-azul .sec-header h2,
-    section.sec-azul .sec-header p { color: var(--branco); }
-    section.sec-azul .sec-header .icone-sec { background: rgba(255,255,255,.18); }
-    section.sec-verde .sec-header h2 { color: var(--azul); }
-    section.sec-verde .sec-header p  { color: rgba(44,46,95,.75); }
-    section.sec-verde .sec-header .icone-sec { background: var(--azul); }
-    .sec-inner { max-width: 860px; margin: 0 auto; }
-    .sec-header {
-      display: flex;
-      align-items: center;
-      gap: .75rem;
-      margin-bottom: 1.5rem;
-    }
-    .sec-header .icone-sec {
-      width: 44px;
-      height: 44px;
-      border-radius: var(--r-sm);
-      background: var(--azul);
-      color: var(--branco);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-      flex-shrink: 0;
-    }
-    .sec-header h2 {
-      font-family: var(--ff-titulo);
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: var(--azul);
-    }
-    .sec-header p {
-      font-size: .85rem;
-      color: var(--sub);
-    }
+    /* ── AUTOCUIDADO ── */
+    .grid-autocuidado{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
+    .card-autocuidado{background:var(--branco);border-radius:var(--r-md);padding:1.5rem 1.25rem;
+      box-shadow:0 4px 20px rgba(0,165,148,.15);text-align:center}
+    .card-autocuidado .emoji{font-size:2.2rem;margin-bottom:.75rem}
+    .card-autocuidado h3{font-family:var(--ff-t);font-weight:700;font-size:.95rem;color:var(--azul);margin-bottom:.5rem}
+    .card-autocuidado p{font-size:.85rem;color:var(--sub);line-height:1.6}
+    .card-autocuidado .btn-saiba{margin-top:1rem;display:inline-block;font-family:var(--ff-t);
+      font-weight:700;font-size:.82rem;color:var(--azul);border:2px solid var(--azul);
+      padding:.4rem .9rem;border-radius:999px;transition:background .15s,color .15s}
+    .card-autocuidado .btn-saiba:hover{background:var(--azul);color:var(--branco)}
 
-    /* ============================================================
-       HORÁRIOS
-    ============================================================ */
-    .tabela-horarios {
-      width: 100%;
-      border-collapse: collapse;
-      border-radius: var(--r-md);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-    }
-    .tabela-horarios thead {
-      background: var(--azul);
-      color: var(--branco);
-    }
-    .tabela-horarios th, .tabela-horarios td {
-      padding: .9rem 1.1rem;
-      text-align: left;
-      font-size: .9rem;
-    }
-    .tabela-horarios th {
-      font-family: var(--ff-titulo);
-      font-weight: 700;
-    }
-    .tabela-horarios tbody tr { background: var(--branco); }
-    .tabela-horarios tbody tr:nth-child(even) { background: #EFF0F8; }
-    .tabela-horarios td { color: var(--texto); }
-    .badge {
-      display: inline-block;
-      padding: .2rem .6rem;
-      border-radius: 999px;
-      font-size: .75rem;
-      font-weight: 700;
-      font-family: var(--ff-titulo);
-    }
-    .badge-verde { background: rgba(0,196,174,.15); color: var(--verde-m); }
-    .badge-azul  { background: rgba(44,46,95,.1);  color: var(--azul); }
-    .badge-verm  { background: rgba(255,69,83,.1);  color: var(--verm); }
+    /* ── MODAL ── */
+    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);
+      z-index:200;align-items:center;justify-content:center;padding:1rem}
+    .modal-overlay.aberto{display:flex}
+    .modal-box{background:var(--branco);border-radius:var(--r-lg);padding:2rem 1.5rem;
+      max-width:500px;width:100%;max-height:85vh;overflow-y:auto;position:relative}
+    .modal-fechar{position:absolute;top:1rem;right:1rem;background:var(--cinza);border:none;
+      border-radius:50%;width:36px;height:36px;font-size:1.1rem;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;color:var(--azul)}
+    .modal-box h2{font-family:var(--ff-t);font-size:1.1rem;font-weight:800;color:var(--azul);margin-bottom:1rem;padding-right:2.5rem}
+    .modal-box ul{list-style:disc;padding-left:1.25rem;display:flex;flex-direction:column;gap:.5rem}
+    .modal-box ul li{font-size:.92rem;color:var(--texto);line-height:1.6}
 
-    /* ============================================================
-       SERVIÇOS
-    ============================================================ */
-    .grid-servicos {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 1rem;
-    }
-    .card-servico {
-      background: rgba(255,255,255,.10);
-      border: 1.5px solid rgba(255,255,255,.18);
-      border-radius: var(--r-md);
-      padding: 1.25rem 1.25rem 1rem;
-      border-left: 4px solid var(--verde);
-    }
-    .card-servico h3 {
-      font-family: var(--ff-titulo);
-      font-weight: 700;
-      font-size: .95rem;
-      color: var(--branco);
-      margin-bottom: .4rem;
-    }
-    .card-servico p {
-      font-size: .85rem;
-      color: rgba(255,255,255,.75);
-      line-height: 1.5;
-    }
+    /* ── CONTATO ── */
+    .grid-contato{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+    .card-contato{background:var(--branco);border-radius:var(--r-md);padding:1.5rem 1.25rem;
+      text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.18)}
+    .card-contato .icone-ct{display:flex;align-items:center;justify-content:center;
+      width:52px;height:52px;border-radius:50%;background:rgba(44,46,95,.08);
+      margin:0 auto .75rem;color:var(--azul)}
+    .card-contato .icone-ct svg{width:24px;height:24px;flex-shrink:0}
+    .card-contato h3{font-family:var(--ff-t);font-weight:700;font-size:.85rem;color:var(--verde-m);
+      margin-bottom:.3rem;text-transform:uppercase;letter-spacing:.04em}
+    .card-contato p{font-family:var(--ff-t);font-weight:800;font-size:.97rem;color:var(--azul);line-height:1.4}
+    .card-contato a{color:var(--verde-m);text-decoration:underline}
 
-    /* ============================================================
-       CALENDÁRIO
-    ============================================================ */
-    .lista-campanhas {
-      display: flex;
-      flex-direction: column;
-      gap: .75rem;
-    }
-    .item-campanha {
-      background: var(--branco);
-      border-radius: var(--r-md);
-      padding: 1rem 1.25rem;
-      box-shadow: 0 4px 16px rgba(44,46,95,.08);
-      border-left: 4px solid var(--verde);
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-    }
-    .data-campanha {
-      flex-shrink: 0;
-      background: var(--verde);
-      color: var(--branco);
-      border-radius: var(--r-sm);
-      width: 54px;
-      text-align: center;
-      padding: .4rem .2rem;
-    }
-    .data-campanha .dia {
-      font-family: var(--ff-titulo);
-      font-weight: 800;
-      font-size: 1.3rem;
-      line-height: 1;
-    }
-    .data-campanha .mes {
-      font-size: .65rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: .05em;
-      opacity: .8;
-    }
-    .info-campanha h3 {
-      font-family: var(--ff-titulo);
-      font-weight: 700;
-      font-size: .95rem;
-      color: var(--azul);
-      margin-bottom: .2rem;
-    }
-    .info-campanha p {
-      font-size: .85rem;
-      color: var(--sub);
-    }
+    /* ── BANNER INSTALAR ── */
+    .banner-instalar{background:var(--azul);color:var(--branco);text-align:center;padding:2.5rem 1.5rem}
+    .banner-instalar h2{font-family:var(--ff-t);font-weight:800;font-size:1.25rem;margin-bottom:.5rem}
+    .banner-instalar p{font-size:.9rem;color:rgba(255,255,255,.8);max-width:420px;margin:0 auto 1.25rem}
 
-    /* ============================================================
-       AUTOCUIDADO
-    ============================================================ */
-    .grid-autocuidado {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1rem;
-    }
-    .card-autocuidado {
-      background: var(--branco);
-      border-radius: var(--r-md);
-      padding: 1.5rem 1.25rem;
-      box-shadow: 0 4px 20px rgba(0,165,148,.15);
-      text-align: center;
-    }
-    .card-autocuidado .emoji {
-      font-size: 2.2rem;
-      margin-bottom: .75rem;
-    }
-    .card-autocuidado h3 {
-      font-family: var(--ff-titulo);
-      font-weight: 700;
-      font-size: .95rem;
-      color: var(--azul);
-      margin-bottom: .5rem;
-    }
-    .card-autocuidado p {
-      font-size: .85rem;
-      color: var(--sub);
-      line-height: 1.6;
-    }
-    .card-autocuidado .btn-saiba {
-      margin-top: 1rem;
-      display: inline-block;
-      font-family: var(--ff-titulo);
-      font-weight: 700;
-      font-size: .82rem;
-      color: var(--azul);
-      border: 2px solid var(--azul);
-      padding: .4rem .9rem;
-      border-radius: 999px;
-      transition: background .15s, color .15s;
-    }
-    .card-autocuidado .btn-saiba:hover { background: var(--azul); color: var(--branco); }
+    /* ── FOOTER ── */
+    footer{background:var(--azul);color:rgba(255,255,255,.65);text-align:center;padding:1.5rem;font-size:.8rem}
+    footer strong{color:var(--verde)}
 
-    /* modal autocuidado */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.45);
-      z-index: 200;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-    }
-    .modal-overlay.aberto { display: flex; }
-    .modal-box {
-      background: var(--branco);
-      border-radius: var(--r-lg);
-      padding: 2rem 1.5rem;
-      max-width: 500px;
-      width: 100%;
-      max-height: 85vh;
-      overflow-y: auto;
-      position: relative;
-    }
-    .modal-fechar {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: var(--cinza);
-      border: none;
-      border-radius: 50%;
-      width: 36px;
-      height: 36px;
-      font-size: 1.1rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--azul);
-    }
-    .modal-box h2 {
-      font-family: var(--ff-titulo);
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--azul);
-      margin-bottom: 1rem;
-      padding-right: 2.5rem;
-    }
-    .modal-box ul {
-      list-style: disc;
-      padding-left: 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: .5rem;
-    }
-    .modal-box ul li { font-size: .92rem; color: var(--texto); line-height: 1.6; }
+    /* ── LOADING ── */
+    #loading{position:fixed;inset:0;background:var(--branco);display:flex;flex-direction:column;
+      align-items:center;justify-content:center;z-index:999;transition:opacity .3s}
+    #loading img{height:60px;margin-bottom:1rem}
+    .spinner{width:36px;height:36px;border:3px solid var(--cinza);border-top-color:var(--verde);
+      border-radius:50%;animation:spin .7s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
 
-    /* ============================================================
-       CONTATO
-    ============================================================ */
-    .grid-contato {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-    }
-    .card-contato {
-      background: var(--branco);
-      border-radius: var(--r-md);
-      padding: 1.5rem 1.25rem;
-      text-align: center;
-      box-shadow: 0 4px 20px rgba(0,0,0,.18);
-    }
-    .card-contato .icone-ct {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      background: rgba(44,46,95,.08);
-      margin: 0 auto .75rem;
-      color: var(--azul);
-    }
-    .card-contato .icone-ct svg {
-      width: 24px;
-      height: 24px;
-      flex-shrink: 0;
-    }
-    .card-contato h3 {
-      font-family: var(--ff-titulo);
-      font-weight: 700;
-      font-size: .85rem;
-      color: var(--verde-m);
-      margin-bottom: .3rem;
-      text-transform: uppercase;
-      letter-spacing: .04em;
-    }
-    .card-contato p {
-      font-family: var(--ff-titulo);
-      font-weight: 800;
-      font-size: .97rem;
-      color: var(--azul);
-      line-height: 1.4;
-    }
-    .card-contato a { color: var(--verde-m); text-decoration: underline; }
+    /* ── ALERTA ── */
+    .alerta-atualizacao{background:var(--verde);color:var(--branco);text-align:center;
+      padding:.6rem 1rem;font-family:var(--ff-t);font-weight:700;font-size:.85rem;display:none}
+    .alerta-atualizacao.visivel{display:block}
 
-    /* ============================================================
-       BANNER INSTALAR
-    ============================================================ */
-    .banner-instalar {
-      background: var(--azul);
-      color: var(--branco);
-      text-align: center;
-      padding: 2.5rem 1.5rem;
-    }
-    .banner-instalar h2 {
-      font-family: var(--ff-titulo);
-      font-weight: 800;
-      font-size: 1.25rem;
-      margin-bottom: .5rem;
-    }
-    .banner-instalar p {
-      font-size: .9rem;
-      color: rgba(255,255,255,.8);
-      max-width: 420px;
-      margin: 0 auto 1.25rem;
-    }
-
-    /* ============================================================
-       FOOTER
-    ============================================================ */
-    footer {
-      background: var(--azul);
-      color: rgba(255,255,255,.65);
-      text-align: center;
-      padding: 1.5rem 1.5rem;
-      font-size: .8rem;
-    }
-    footer strong { color: var(--verde); }
-
-    /* ============================================================
-       LOADING
-    ============================================================ */
-    #loading {
-      position: fixed;
-      inset: 0;
-      background: var(--branco);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-      transition: opacity .3s;
-    }
-    #loading img { height: 60px; margin-bottom: 1rem; }
-    .spinner {
-      width: 36px;
-      height: 36px;
-      border: 3px solid var(--cinza);
-      border-top-color: var(--verde);
-      border-radius: 50%;
-      animation: spin .7s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* ============================================================
-       ALERTA DE ATUALIZAÇÃO
-    ============================================================ */
-    .alerta-atualizacao {
-      background: var(--verde);
-      color: var(--branco);
-      text-align: center;
-      padding: .6rem 1rem;
-      font-family: var(--ff-titulo);
-      font-weight: 700;
-      font-size: .85rem;
-      display: none;
-    }
-    .alerta-atualizacao.visivel { display: block; }
-
-    /* ============================================================
-       RESPONSIVO
-    ============================================================ */
-    @media (max-width: 640px) {
-      nav { display: none; }
-      .hamburger { display: flex; }
-      .grid-icones {
-        grid-template-columns: repeat(2, 1fr);
-        max-width: 420px;
-        margin: 0 auto;
-      }
-      /* último card sozinho fica centralizado */
-      .grid-icones a:last-child:nth-child(odd) {
-        grid-column: 1 / -1;
-        max-width: 180px;
-        margin: 0 auto;
-        width: 100%;
-      }
-      .tabela-horarios th:last-child,
-      .tabela-horarios td:last-child { display: none; }
+    /* ── RESPONSIVO ── */
+    @media(max-width:640px){
+      nav.desktop{display:none}
+      .hamburger{display:flex}
+      .carrossel-btn{display:none}
+      .tabela-horarios th:last-child,.tabela-horarios td:last-child{display:none}
+      .informe-card{flex:0 0 240px}
     }
   </style>
 </head>
 <body>
 
-<!-- Loading -->
 <div id="loading" aria-hidden="true">
   <img src="https://i.ibb.co/TDD6xN4f/Icone-Nina.png" alt="Nina Comunica" onerror="this.style.display='none'" />
   <div class="spinner"></div>
 </div>
 
-<!-- Header -->
 <header>
   <div class="nav-inner">
     <a href="#inicio" class="logo">
       <img src="https://i.ibb.co/TDD6xN4f/Icone-Nina.png" alt="Nina Comunica" onerror="this.style.display='none'" />
-      <div class="logo-txt">
-        Nina Comunica
-        <span>UBS Nina Liberato · Caruaru</span>
-      </div>
+      <div class="logo-txt">Nina Comunica<span>UBS Nina Liberato · Caruaru</span></div>
     </a>
-    <nav>
+    <nav class="desktop">
       <a href="#horarios">Horários</a>
+      <a href="#agendas">Agendas</a>
       <a href="#servicos">Serviços</a>
       <a href="#calendario">Campanhas</a>
+      <a href="#acs">ACS</a>
       <a href="#autocuidado">Autocuidado</a>
       <a href="#contato">Contato</a>
     </nav>
@@ -753,28 +289,20 @@
   </div>
   <nav class="mobile-menu" id="mobileMenu">
     <a href="#horarios"    onclick="toggleMenu()">Horários</a>
+    <a href="#agendas"     onclick="toggleMenu()">Agendas</a>
     <a href="#servicos"    onclick="toggleMenu()">Serviços</a>
     <a href="#calendario"  onclick="toggleMenu()">Campanhas</a>
+    <a href="#acs"         onclick="toggleMenu()">Contato ACS</a>
     <a href="#autocuidado" onclick="toggleMenu()">Autocuidado</a>
     <a href="#contato"     onclick="toggleMenu()">Contato</a>
   </nav>
 </header>
 
-<!-- Alerta de atualização de dados -->
-<div class="alerta-atualizacao" id="alertaAtualizacao">
-  ✅ Informações atualizadas pela equipe da UBS
-</div>
+<div class="alerta-atualizacao" id="alertaAtualizacao">✅ Informações atualizadas pela equipe da UBS</div>
 
 <!-- HERO -->
 <section class="hero" id="inicio">
-  <!-- imagem de fundo via tag img para contornar CSP do artifact -->
-  <img
-    class="hero-bg"
-    src="https://i.ibb.co/mFNhYKP1/blur-hospital.jpg"
-    alt=""
-    aria-hidden="true"
-    onerror="this.style.display='none'"
-  />
+  <img class="hero-bg" src="https://i.ibb.co/mFNhYKP1/blur-hospital.jpg" alt="" aria-hidden="true" onerror="this.style.display='none'" />
   <div class="hero-inner">
     <img class="hero-logo" src="https://i.ibb.co/QFkzphcJ/Logo-mono.png" alt="Nina Comunica" onerror="this.style.display='none'" />
     <h1>Sua UBS <strong>mais perto</strong> de você</h1>
@@ -786,123 +314,163 @@
   </div>
 </section>
 
-<!-- ACESSO RÁPIDO -->
+<!-- ACESSO RÁPIDO (carrossel) -->
 <section class="acesso-rapido">
   <p class="sec-titulo">O que você precisa?</p>
-  <div class="grid-icones">
+  <div class="carrossel-wrapper">
+    <button class="carrossel-btn prev" onclick="moverCarrossel(-1)" aria-label="Anterior">&#8249;</button>
+    <div class="carrossel-track" id="carrosselTrack">
 
-    <a href="#horarios" class="card-icone">
-      <div class="icone-circulo">
-        <!-- relógio / horários -->
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-        </svg>
-      </div>
-      <strong>Horários de atendimento</strong>
-    </a>
+      <a href="#horarios" class="card-icone">
+        <div class="icone-circulo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <strong>Horários de atendimento</strong>
+      </a>
 
-    <a href="#servicos" class="card-icone">
-      <div class="icone-circulo">
-        <!-- cruz médica / serviços -->
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="M12 8v8M8 12h8"/>
-        </svg>
-      </div>
-      <strong>Serviços disponíveis</strong>
-    </a>
+      <a href="#agendas" class="card-icone">
+        <div class="icone-circulo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/></svg>
+        </div>
+        <strong>Agendas dos profissionais</strong>
+      </a>
 
-    <a href="#calendario" class="card-icone">
-      <div class="icone-circulo">
-        <!-- calendário / campanhas -->
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="14" x2="8" y2="14"/><line x1="12" y1="14" x2="12" y2="14"/><line x1="16" y1="14" x2="16" y2="14"/>
-        </svg>
-      </div>
-      <strong>Próximas campanhas</strong>
-    </a>
+      <a href="#servicos" class="card-icone">
+        <div class="icone-circulo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="M12 8v8M8 12h8"/></svg>
+        </div>
+        <strong>Serviços disponíveis</strong>
+      </a>
 
-    <a href="#autocuidado" class="card-icone">
-      <div class="icone-circulo">
-        <!-- coração / autocuidado -->
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-        </svg>
-      </div>
-      <strong>Autocuidado em casa</strong>
-    </a>
+      <a href="#calendario" class="card-icone">
+        <div class="icone-circulo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <strong>Próximas campanhas</strong>
+      </a>
 
-    <a href="#contato" class="card-icone">
-      <div class="icone-circulo">
-        <!-- localização / contato -->
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
-        </svg>
-      </div>
-      <strong>Contato e endereço</strong>
-    </a>
+      <a href="#informes" class="card-icone">
+        <div class="icone-circulo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        </div>
+        <strong>Informes e avisos</strong>
+      </a>
 
+      <a href="#acs" class="card-icone">
+        <div class="icone-circulo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <strong>Contato das ACS</strong>
+      </a>
 
+      <a href="#autocuidado" class="card-icone">
+        <div class="icone-circulo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <strong>Autocuidado em casa</strong>
+      </a>
 
+      <a href="#contato" class="card-icone">
+        <div class="icone-circulo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <strong>Contato e endereço</strong>
+      </a>
+
+    </div>
+    <button class="carrossel-btn next" onclick="moverCarrossel(1)" aria-label="Próximo">&#8250;</button>
   </div>
+  <div class="carrossel-dots" id="carrosselDots"></div>
 </section>
 
 <!-- HORÁRIOS -->
-<section id="horarios" class="sec-branco">
+<section id="horarios">
   <div class="sec-inner">
     <div class="sec-header">
       <div class="icone-sec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-      <div>
-        <h2>Horários de atendimento</h2>
-        <p id="horarios-atualizacao">Última atualização: carregando...</p>
-      </div>
+      <div><h2>Horários de atendimento</h2><p id="horarios-atualizacao">Última atualização: carregando...</p></div>
     </div>
-    <div style="overflow-x:auto;">
-      <table class="tabela-horarios" id="tabelaHorarios">
-        <thead>
-          <tr>
-            <th>Dia da semana</th>
-            <th>Horário</th>
-            <th>Serviço</th>
-            <th>Observação</th>
-          </tr>
-        </thead>
-        <tbody id="tbodyHorarios">
-          <!-- preenchido via JS / Google Sheets -->
-        </tbody>
+    <div style="overflow-x:auto">
+      <table class="tabela-horarios">
+        <thead><tr><th>Dia da semana</th><th>Horário</th><th>Serviço</th><th>Observação</th></tr></thead>
+        <tbody id="tbodyHorarios"></tbody>
       </table>
     </div>
   </div>
 </section>
 
-<!-- SERVIÇOS -->
-<section id="servicos" class="sec-azul">
+<!-- AGENDAS DOS PROFISSIONAIS -->
+<section id="agendas" class="sec-azul">
   <div class="sec-inner">
     <div class="sec-header">
-      <div class="icone-sec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="M12 8v8M8 12h8"/></svg></div>
-      <div>
-        <h2>Serviços disponíveis</h2>
-        <p>Tudo que a UBS Nina Liberato oferece para você e sua família</p>
-      </div>
+      <div class="icone-sec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+      <div><h2>Agendas dos profissionais e serviços</h2><p style="color:rgba(255,255,255,.7)">Selecione o profissional para ver a agenda</p></div>
     </div>
-    <div class="grid-servicos" id="gridServicos">
-      <!-- preenchido via JS -->
+    <div class="agenda-abas">
+      <button class="agenda-aba ativa" onclick="trocarAgenda('medica',this)">Médica</button>
+      <button class="agenda-aba" onclick="trocarAgenda('enfermeira',this)">Enfermeira</button>
+      <button class="agenda-aba" onclick="trocarAgenda('emulti',this)">eMulti</button>
+      <button class="agenda-aba" onclick="trocarAgenda('odonto',this)">Odontomóvel</button>
+    </div>
+    <div id="agenda-medica" class="agenda-painel ativo">
+      <div class="agenda-grid" id="gridAgendaMedica"></div>
+    </div>
+    <div id="agenda-enfermeira" class="agenda-painel">
+      <div class="agenda-grid" id="gridAgendaEnfermeira"></div>
+    </div>
+    <div id="agenda-emulti" class="agenda-painel">
+      <div class="agenda-grid" id="gridAgendaEMulti"></div>
+    </div>
+    <div id="agenda-odonto" class="agenda-painel">
+      <div class="agenda-grid" id="gridAgendaOdonto"></div>
     </div>
   </div>
 </section>
 
-<!-- CALENDÁRIO -->
+<!-- SERVIÇOS -->
+<section id="servicos" class="sec-azul" style="background:#222450">
+  <div class="sec-inner">
+    <div class="sec-header">
+      <div class="icone-sec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="M12 8v8M8 12h8"/></svg></div>
+      <div><h2>Serviços disponíveis</h2><p style="color:rgba(255,255,255,.7)">Tudo que a UBS Nina Liberato oferece para você</p></div>
+    </div>
+    <div class="grid-servicos" id="gridServicos"></div>
+    <button class="btn-ver-mais" id="btnVerMais" onclick="verMaisServicos()" style="display:none">Ver todos os serviços ↓</button>
+  </div>
+</section>
+
+<!-- CAMPANHAS -->
 <section id="calendario">
   <div class="sec-inner">
     <div class="sec-header">
       <div class="icone-sec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-      <div>
-        <h2>Campanhas e grupos</h2>
-        <p>Fique por dentro das próximas atividades da unidade</p>
-      </div>
+      <div><h2>Campanhas e grupos</h2><p>Fique por dentro das próximas atividades da unidade</p></div>
     </div>
-    <div class="lista-campanhas" id="listaCampanhas">
-      <!-- preenchido via JS -->
+    <div class="lista-campanhas" id="listaCampanhas"></div>
+  </div>
+</section>
+
+<!-- INFORMES -->
+<section id="informes" class="sec-azul">
+  <div class="sec-inner">
+    <div class="sec-header">
+      <div class="icone-sec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+      <div><h2>Informes e avisos</h2><p style="color:rgba(255,255,255,.7)">Comunicados recentes da UBS Nina Liberato</p></div>
     </div>
+    <div class="informes-track" id="informesTrack">
+      <div style="color:rgba(255,255,255,.5);font-size:.9rem;padding:1rem">Carregando informes...</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO ACS -->
+<section id="acs">
+  <div class="sec-inner">
+    <div class="sec-header">
+      <div class="icone-sec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+      <div><h2>Agentes Comunitários de Saúde</h2><p>Fale diretamente com o ACS da sua área</p></div>
+    </div>
+    <div class="grid-acs" id="gridACS"></div>
   </div>
 </section>
 
@@ -911,14 +479,9 @@
   <div class="sec-inner">
     <div class="sec-header">
       <div class="icone-sec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
-      <div>
-        <h2>Cuidando da sua saúde em casa</h2>
-        <p>Orientações simples revisadas pela equipe da UBS</p>
-      </div>
+      <div><h2>Cuidando da sua saúde em casa</h2><p>Orientações simples revisadas pela equipe da UBS</p></div>
     </div>
-    <div class="grid-autocuidado" id="gridAutocuidado">
-      <!-- preenchido via JS -->
-    </div>
+    <div class="grid-autocuidado" id="gridAutocuidado"></div>
   </div>
 </section>
 
@@ -927,32 +490,25 @@
   <div class="sec-inner">
     <div class="sec-header">
       <div class="icone-sec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.49 12 19.79 19.79 0 0 1 1.44 3.4 2 2 0 0 1 3.41 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.86-.86a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.74 16z"/></svg></div>
-      <div>
-        <h2>Contato e localização</h2>
-        <p>Como chegar e falar com a UBS Nina Liberato</p>
-      </div>
+      <div><h2>Contato e localização</h2><p style="color:rgba(255,255,255,.7)">Como chegar e falar com a UBS Nina Liberato</p></div>
     </div>
-    <div class="grid-contato" id="gridContato">
-      <!-- preenchido via JS -->
-    </div>
+    <div class="grid-contato" id="gridContato"></div>
   </div>
 </section>
 
 <!-- BANNER INSTALAR -->
-<div class="banner-instalar" id="instalar">
+<div class="banner-instalar">
   <h2>📲 Salve o Nina Comunica no seu celular</h2>
-  <p>Acesse as informações da UBS a qualquer hora, mesmo sem internet, como se fosse um aplicativo.</p>
-  <button class="btn btn-verde" onclick="instalarApp()" id="btnInstalar">Adicionar à tela inicial</button>
-  <p style="margin-top:.75rem; font-size:.8rem; color:rgba(255,255,255,.6);" id="instrucaoInstalar"></p>
+  <p>Acesse as informações da UBS a qualquer hora, como se fosse um aplicativo.</p>
+  <button class="btn btn-verde" onclick="instalarApp()">Adicionar à tela inicial</button>
+  <p style="margin-top:.75rem;font-size:.8rem;color:rgba(255,255,255,.6)" id="instrucaoInstalar"></p>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <p><strong>Nina Comunica</strong> · UBS Nina Liberato · Bairro Nina Liberato, Caruaru – PE</p>
-  <p style="margin-top:.4rem;">Projeto desenvolvido por estudantes de Medicina da UFPE-CAA · Módulo PIESC 2026</p>
+  <p style="margin-top:.4rem">Projeto desenvolvido por estudantes do PRONERA · Turma de Medicina UFPE-CAA · 2026</p>
 </footer>
 
-<!-- MODAL AUTOCUIDADO -->
 <div class="modal-overlay" id="modalOverlay" onclick="fecharModal(event)">
   <div class="modal-box">
     <button class="modal-fechar" onclick="fecharModal()" aria-label="Fechar">✕</button>
@@ -960,295 +516,305 @@
   </div>
 </div>
 
-<!-- ============================================================
-     DADOS MOCKADOS (serão substituídos pela leitura do Google Sheets)
-     Quando integrado ao Sheets, apenas a função carregarDados() muda.
-============================================================ -->
 <script>
-/* ----------------------------------------------------------------
-   DADOS — edite aqui enquanto o Google Sheets não está conectado,
-   ou substitua carregarDados() pela chamada à API do Sheets.
----------------------------------------------------------------- */
+/* ================================================================
+   DADOS MOCKADOS
+   Substitua por carregarDados() com Google Sheets quando pronto
+================================================================ */
 const DADOS = {
   horarios: [
-    { dia: "Segunda-feira",  horario: "07:00 – 11:00", servico: "Consulta médica",          obs: "Agendamento" },
-    { dia: "Segunda-feira",  horario: "13:00 – 16:00", servico: "Vacinação",                obs: "Livre demanda" },
-    { dia: "Terça-feira",    horario: "07:00 – 11:00", servico: "Consulta médica",          obs: "Agendamento" },
-    { dia: "Terça-feira",    horario: "08:00 – 10:00", servico: "Grupo Hiperdia",           obs: "Sala de reunião" },
-    { dia: "Quarta-feira",   horario: "07:00 – 11:00", servico: "Pré-natal",                obs: "Agendamento" },
-    { dia: "Quarta-feira",   horario: "15:00 – 17:00", servico: "Atividade física (eMulti)",obs: "Área externa" },
-    { dia: "Quinta-feira",   horario: "07:00 – 11:00", servico: "Consulta médica",          obs: "Agendamento" },
-    { dia: "Quinta-feira",   horario: "13:00 – 16:00", servico: "Curativo / Procedimentos", obs: "Livre demanda" },
-    { dia: "Sexta-feira",    horario: "07:00 – 11:00", servico: "Coleta de sangue",         obs: "Em jejum" },
-    { dia: "Sexta-feira",    horario: "07:00 – 10:00", servico: "Dispensação de medicamentos", obs: "Livre demanda" },
+    {Dia:"Segunda-feira",Horario:"07:30 – 12:00",Servico:"Consulta médica",Obs:"Agendamento"},
+    {Dia:"Segunda-feira",Horario:"13:00 – 16:30",Servico:"Consulta médica",Obs:"Agendamento"},
+    {Dia:"Terça-feira",Horario:"07:30 – 12:00",Servico:"Acolhimento",Obs:"Livre demanda"},
+    {Dia:"Terça-feira",Horario:"13:00 – 16:30",Servico:"Acolhimento",Obs:"Livre demanda"},
+    {Dia:"Quarta-feira",Horario:"07:30 – 12:00",Servico:"Saúde Mental / Pré-natal",Obs:"Agendamento"},
+    {Dia:"Quarta-feira",Horario:"13:00 – 16:30",Servico:"Planejamento Familiar",Obs:"Agendamento"},
+    {Dia:"Quinta-feira",Horario:"07:30 – 12:00",Servico:"Pré-natal",Obs:"Agendamento"},
+    {Dia:"Quinta-feira",Horario:"13:00 – 16:30",Servico:"Hiperdia",Obs:"Agendamento"},
+    {Dia:"Sexta-feira",Horario:"07:30 – 12:00",Servico:"Visita domiciliar",Obs:"Com equipe"},
+    {Dia:"Sexta-feira",Horario:"13:00 – 16:30",Servico:"Visita domiciliar",Obs:"Com equipe"},
+  ],
+  agendaMedica: [
+    {dia:"Segunda",manha:"Atendimento",tarde:"Atendimento"},
+    {dia:"Terça",manha:"Acolhimento",tarde:"Acolhimento"},
+    {dia:"Quarta",manha:"Saúde Mental",tarde:"Planejamento Familiar"},
+    {dia:"Quinta",manha:"Pré-natal",tarde:"Hiperdia"},
+    {dia:"Sexta",manha:"Visita Domiciliar",tarde:"Visita Domiciliar"},
+  ],
+  agendaEnfermeira: [
+    {dia:"Segunda",manha:"Atendimento / Curativo",tarde:"Vacinação"},
+    {dia:"Terça",manha:"Acolhimento",tarde:"Pré-natal"},
+    {dia:"Quarta",manha:"Coleta de sangue",tarde:"Grupo de autocuidado"},
+    {dia:"Quinta",manha:"Puericultura",tarde:"Hiperdia"},
+    {dia:"Sexta",manha:"Visita Domiciliar",tarde:"Visita Domiciliar"},
+  ],
+  agendaEMulti: [
+    {dia:"Quarta 21/10",profissional:"Assistente Social (Residente)",turno:"Tarde",atividade:"Atendimento individual · Planejamento familiar · Visita domiciliar"},
+    {dia:"Quarta 21/10",profissional:"Fisioterapeuta (Residente)",turno:"Tarde",atividade:"Atendimento individual"},
+    {dia:"Quarta 21/10",profissional:"Nutricionista (Residente)",turno:"Tarde",atividade:"Grupo de autocuidado · Atendimento individual"},
+    {dia:"Sexta 23/10",profissional:"Educador(a) Físico(a) (Preceptor)",turno:"Manhã",atividade:"Grupo de atividade física"},
+    {dia:"Quarta 28/10",profissional:"Educador(a) Físico(a) (Residente)",turno:"Manhã",atividade:"Grupo de autocuidado"},
+    {dia:"Quarta 28/10",profissional:"Psicólogo(a) (Preceptor)",turno:"Manhã",atividade:"Grupo de autocuidado"},
+    {dia:"Sexta 30/10",profissional:"Educador(a) Físico(a) (Preceptor)",turno:"Manhã",atividade:"Grupo de atividade física"},
+  ],
+  agendaOdonto: [
+    {data:"04/11/2026",dia:"Quarta",local:"Nina Liberato",equipe:"Vinícius",turnoTarde:"X"},
+    {data:"03/11/2026",dia:"Terça",local:"Divinópolis",equipe:"Vinícius",turnoTarde:"X"},
+    {data:"05/11/2026",dia:"Quinta",local:"São Francisco II e III",equipe:"Vinícius",turnoTarde:"X"},
+    {data:"06/11/2026",dia:"Sexta",local:"Associação Geraldo Martins",equipe:"Vinícius",turnoTarde:"X"},
+  ],
+  acs: [
+    {nome:"ACS 01",area:"Microárea 1 – Rua das Palmeiras e adjacências",telefone:"(81) 9 9111-1111"},
+    {nome:"ACS 02",area:"Microárea 2 – Rua dos Ipês e adjacências",telefone:"(81) 9 9222-2222"},
+    {nome:"ACS 03",area:"Microárea 3 – Travessa da Paz e adjacências",telefone:"(81) 9 9333-3333"},
+    {nome:"ACS 04",area:"Microárea 4 – Rua Nova e adjacências",telefone:"(81) 9 9444-4444"},
+  ],
+  informes: [
+    {url:"https://i.ibb.co/TDD6xN4f/Icone-Nina.png",legenda:"Exemplo de informe — substitua pela URL da imagem real no ImgBB"},
   ],
   servicos: [
-    { titulo: "Consulta médica",          desc: "Atendimento clínico geral, renovação de receitas e encaminhamentos." },
-    { titulo: "Vacinação",                desc: "Vacinas do calendário nacional para todas as idades, inclusive gripe." },
-    { titulo: "Pré-natal",                desc: "Acompanhamento da gestação com consultas e exames de rotina." },
-    { titulo: "Puericultura",             desc: "Acompanhamento do crescimento e desenvolvimento das crianças." },
-    { titulo: "Grupo Hiperdia",           desc: "Grupo de apoio para pacientes com hipertensão e diabetes." },
-    { titulo: "Coleta de sangue",         desc: "Coleta de exames laboratoriais às sextas-feiras, em jejum." },
-    { titulo: "Curativo e procedimentos", desc: "Realização de curativos simples e procedimentos de baixa complexidade." },
-    { titulo: "Dispensação de medicamentos", desc: "Retirada de medicamentos da farmácia básica do SUS." },
-    { titulo: "Atividades físicas (eMulti)", desc: "Exercícios orientados pelo educador físico nas quartas-feiras." },
-    { titulo: "Acolhimento",              desc: "Escuta qualificada e direcionamento para o serviço mais adequado." },
+    {titulo:"Consulta médica",desc:"Atendimento clínico geral, renovação de receitas e encaminhamentos."},
+    {titulo:"Vacinação",desc:"Vacinas do calendário nacional para todas as idades, inclusive gripe."},
+    {titulo:"Pré-natal",desc:"Acompanhamento da gestação com consultas e exames de rotina."},
+    {titulo:"Puericultura",desc:"Acompanhamento do crescimento e desenvolvimento das crianças."},
+    {titulo:"Grupo Hiperdia",desc:"Grupo de apoio para pacientes com hipertensão e diabetes."},
+    {titulo:"Coleta de sangue",desc:"Coleta de exames laboratoriais às sextas-feiras, em jejum."},
+    {titulo:"Curativo e procedimentos",desc:"Realização de curativos simples e procedimentos de baixa complexidade."},
+    {titulo:"Dispensação de medicamentos",desc:"Retirada de medicamentos da farmácia básica do SUS."},
+    {titulo:"Atividades físicas (eMulti)",desc:"Exercícios orientados pelo educador físico nas quartas e sextas-feiras."},
+    {titulo:"Acolhimento",desc:"Escuta qualificada e direcionamento para o serviço mais adequado."},
+    {titulo:"Odontomóvel",desc:"Atendimento odontológico itinerante — consulte a agenda de datas."},
   ],
   campanhas: [
-    { dia: "12", mes: "Nov", titulo: "Novembro Azul – Saúde do Homem", desc: "Roda de conversa e orientações sobre prevenção do câncer de próstata · 9h, sala de reunião" },
-    { dia: "19", mes: "Nov", titulo: "Dia Mundial da Diabetes",         desc: "Aferição de glicemia gratuita e orientações nutricionais · 8h – 11h, recepção da UBS" },
-    { dia: "26", mes: "Nov", titulo: "Grupo Hiperdia – Novembro",       desc: "Encontro mensal do grupo · Terça-feira, 8h – 10h, sala de reunião" },
-    { dia: "03", mes: "Dez", titulo: "Campanha de Vacinação Infantil",  desc: "Atualização do cartão vacinal para crianças de 0 a 5 anos · Livre demanda" },
-    { dia: "10", mes: "Dez", titulo: "Atividade de Encerramento do Ano", desc: "Celebração com a comunidade, orientações de saúde e distribuição de material informativo · 9h, área externa" },
+    {Dia:"12",Mes:"Nov",Titulo:"Novembro Azul – Saúde do Homem",Descricao:"Roda de conversa e orientações sobre prevenção do câncer de próstata · 9h, sala de reunião"},
+    {Dia:"19",Mes:"Nov",Titulo:"Dia Mundial da Diabetes",Descricao:"Aferição de glicemia gratuita e orientações nutricionais · 8h – 11h, recepção da UBS"},
+    {Dia:"26",Mes:"Nov",Titulo:"Grupo Hiperdia – Novembro",Descricao:"Encontro mensal do grupo · Terça-feira, 8h – 10h, sala de reunião"},
+    {Dia:"03",Mes:"Dez",Titulo:"Campanha de Vacinação Infantil",Descricao:"Atualização do cartão vacinal para crianças de 0 a 5 anos · Livre demanda"},
+    {Dia:"10",Mes:"Dez",Titulo:"Atividade de Encerramento do Ano",Descricao:"Celebração com a comunidade · 9h, área externa"},
   ],
   autocuidado: [
-    {
-      emoji: "💉",
-      titulo: "Como guardar a insulina",
-      resumo: "Insulina aberta deve ficar fora da geladeira, em local fresco e longe do sol.",
-      dicas: [
-        "Insulina fechada (não aberta): guardar na geladeira entre 2°C e 8°C.",
-        "Insulina aberta (em uso): pode ficar em temperatura ambiente (até 25°C) por até 28 dias.",
-        "Nunca deixar no freezer, no sol ou dentro do carro.",
-        "Verificar sempre a validade e a aparência antes de aplicar.",
-        "Em caso de dúvida, procure a enfermeira ou o médico da UBS."
-      ]
-    },
-    {
-      emoji: "💊",
-      titulo: "Uso correto dos medicamentos",
-      resumo: "Tome os remédios nos horários certos e nunca pare sem falar com o médico.",
-      dicas: [
-        "Tome os medicamentos sempre no mesmo horário todos os dias.",
-        "Nunca pare de tomar por conta própria, mesmo que se sentir bem.",
-        "Guarde os remédios em local seco, fresco e fora do alcance de crianças.",
-        "Não compartilhe medicamentos com outras pessoas.",
-        "Leve sempre o receituário nas consultas para atualização."
-      ]
-    },
-    {
-      emoji: "🗑️",
-      titulo: "Descarte de agulhas e seringas",
-      resumo: "Nunca jogue agulhas no lixo comum. A UBS tem local correto para descarte.",
-      dicas: [
-        "Coloque as agulhas usadas em garrafas PET com tampa rosqueada.",
-        "Nunca reencape a agulha após o uso (risco de acidente).",
-        "Quando a garrafa estiver cheia até 2/3, leve à UBS para descarte.",
-        "Nunca jogue no lixo comum, vaso sanitário ou terreno baldio.",
-        "A UBS aceita o descarte sem necessidade de agendamento."
-      ]
-    },
-    {
-      emoji: "🩺",
-      titulo: "Como medir a pressão em casa",
-      resumo: "Meça sempre sentado, em repouso de 5 minutos, sem café ou cigarro antes.",
-      dicas: [
-        "Fique sentado e relaxado por pelo menos 5 minutos antes de medir.",
-        "Não fume, não tome café e não faça exercício nos 30 minutos anteriores.",
-        "Coloque o manguito (bracelete) 2 cm acima do cotovelo.",
-        "Meça sempre no mesmo braço e no mesmo horário.",
-        "Anote os valores e leve para a consulta. Pressão normal: abaixo de 12x8."
-      ]
-    },
-    {
-      emoji: "🥗",
-      titulo: "Alimentação e estilo de vida saudável",
-      resumo: "Pequenas mudanças no dia a dia ajudam muito no controle da pressão e do açúcar.",
-      dicas: [
-        "Reduza o sal: evite saleiro na mesa e alimentos ultraprocessados.",
-        "Prefira frutas, verduras, legumes e grãos integrais.",
-        "Beba pelo menos 6 a 8 copos de água por dia.",
-        "Caminhe pelo menos 30 minutos por dia, 5 dias na semana.",
-        "Evite bebidas alcoólicas e cigarro.",
-        "Participe das atividades físicas oferecidas pela eMulti nas quartas-feiras!"
-      ]
-    },
-    {
-      emoji: "😴",
-      titulo: "Saúde mental e bem-estar",
-      resumo: "Cuidar da mente é tão importante quanto cuidar do corpo.",
-      dicas: [
-        "Durma de 7 a 8 horas por noite, mantendo horários regulares.",
-        "Reserve momentos de lazer e atividades que você gosta.",
-        "Converse com alguém de confiança quando estiver preocupado.",
-        "Se estiver se sentindo muito triste, ansioso ou sem ânimo, procure a UBS.",
-        "O serviço de saúde mental pode ser acessado por encaminhamento na UBS."
-      ]
-    },
+    {emoji:"💉",titulo:"Como guardar a insulina",resumo:"Insulina aberta deve ficar fora da geladeira, em local fresco e longe do sol.",dicas:["Insulina fechada: guardar na geladeira entre 2°C e 8°C.","Insulina aberta: pode ficar em temperatura ambiente (até 25°C) por até 28 dias.","Nunca deixar no freezer, no sol ou dentro do carro.","Verificar sempre a validade e a aparência antes de aplicar.","Em caso de dúvida, procure a enfermeira ou o médico da UBS."]},
+    {emoji:"💊",titulo:"Uso correto dos medicamentos",resumo:"Tome os remédios nos horários certos e nunca pare sem falar com o médico.",dicas:["Tome os medicamentos sempre no mesmo horário todos os dias.","Nunca pare de tomar por conta própria, mesmo que se sentir bem.","Guarde os remédios em local seco, fresco e fora do alcance de crianças.","Não compartilhe medicamentos com outras pessoas.","Leve sempre o receituário nas consultas para atualização."]},
+    {emoji:"🗑️",titulo:"Descarte de agulhas e seringas",resumo:"Nunca jogue agulhas no lixo comum. A UBS tem local correto para descarte.",dicas:["Coloque as agulhas usadas em garrafas PET com tampa rosqueada.","Nunca reencape a agulha após o uso (risco de acidente).","Quando a garrafa estiver cheia até 2/3, leve à UBS para descarte.","Nunca jogue no lixo comum, vaso sanitário ou terreno baldio.","A UBS aceita o descarte sem necessidade de agendamento."]},
+    {emoji:"🩺",titulo:"Como medir a pressão em casa",resumo:"Meça sempre sentado, em repouso de 5 minutos, sem café ou cigarro antes.",dicas:["Fique sentado e relaxado por pelo menos 5 minutos antes de medir.","Não fume, não tome café e não faça exercício nos 30 minutos anteriores.","Coloque o manguito 2 cm acima do cotovelo.","Meça sempre no mesmo braço e no mesmo horário.","Pressão normal: abaixo de 12x8. Anote e leve para a consulta."]},
+    {emoji:"🥗",titulo:"Alimentação e estilo de vida saudável",resumo:"Pequenas mudanças no dia a dia ajudam muito no controle da pressão e do açúcar.",dicas:["Reduza o sal: evite saleiro na mesa e alimentos ultraprocessados.","Prefira frutas, verduras, legumes e grãos integrais.","Beba pelo menos 6 a 8 copos de água por dia.","Caminhe pelo menos 30 minutos por dia, 5 dias na semana.","Evite bebidas alcoólicas e cigarro.","Participe das atividades físicas da eMulti nas quartas e sextas!"]},
+    {emoji:"😴",titulo:"Saúde mental e bem-estar",resumo:"Cuidar da mente é tão importante quanto cuidar do corpo.",dicas:["Durma de 7 a 8 horas por noite, mantendo horários regulares.","Reserve momentos de lazer e atividades que você gosta.","Converse com alguém de confiança quando estiver preocupado.","Se estiver muito triste, ansioso ou sem ânimo, procure a UBS.","O serviço de saúde mental pode ser acessado por encaminhamento na UBS."]},
   ],
-  contato: {
-    telefone:  "(81) 9 9999-9999",
-    endereco:  "Rua das Flores, s/n · Bairro Nina Liberato · Caruaru – PE",
-    horarioFuncionamento: "Segunda a Sexta: 07h às 17h",
-    mapsLink:  "https://maps.google.com/?q=UBS+Nina+Liberato+Caruaru",
+  contato:{
+    telefone:"(81) 9 9999-9999",
+    endereco:"Rua das Flores, s/n · Bairro Nina Liberato · Caruaru – PE",
+    horarioFuncionamento:"Segunda a Sexta: 07h às 17h",
+    mapsLink:"https://maps.google.com/?q=UBS+Nina+Liberato+Caruaru",
   },
   ultimaAtualizacao: new Date().toLocaleDateString("pt-BR"),
 };
 
-/* ----------------------------------------------------------------
+/* ================================================================
    RENDERIZAÇÃO
----------------------------------------------------------------- */
-function renderizarHorarios() {
-  const tbody = document.getElementById("tbodyHorarios");
-  tbody.innerHTML = DADOS.horarios.map(h => `
-    <tr>
-      <td><strong>${h.dia}</strong></td>
-      <td>${h.horario}</td>
-      <td>${h.servico}</td>
-      <td><span class="badge badge-verde">${h.obs}</span></td>
-    </tr>
-  `).join("");
-  document.getElementById("horarios-atualizacao").textContent =
-    `Última atualização: ${DADOS.ultimaAtualizacao}`;
+================================================================ */
+function renderizarHorarios(){
+  document.getElementById("tbodyHorarios").innerHTML = DADOS.horarios.map(h=>`
+    <tr><td><strong>${h.Dia}</strong></td><td>${h.Horario}</td><td>${h.Servico}</td>
+    <td><span class="badge badge-verde">${h.Obs}</span></td></tr>`).join("");
+  document.getElementById("horarios-atualizacao").textContent = `Última atualização: ${DADOS.ultimaAtualizacao}`;
 }
 
-function renderizarServicos() {
-  document.getElementById("gridServicos").innerHTML =
-    DADOS.servicos.map(s => `
-      <div class="card-servico">
-        <h3>${s.titulo}</h3>
-        <p>${s.desc}</p>
-      </div>
-    `).join("");
+function renderizarAgendaMedica(){
+  document.getElementById("gridAgendaMedica").innerHTML = DADOS.agendaMedica.map(a=>`
+    <div class="agenda-card">
+      <div class="dia-semana">${a.dia}</div>
+      <div class="turno">Manhã · 07:30 – 12:00</div>
+      <div class="atividade">${a.manha}</div>
+      <div class="turno">Tarde · 13:00 – 16:30</div>
+      <div class="atividade">${a.tarde}</div>
+    </div>`).join("");
 }
 
-function renderizarCampanhas() {
-  document.getElementById("listaCampanhas").innerHTML =
-    DADOS.campanhas.map(c => `
-      <div class="item-campanha">
-        <div class="data-campanha">
-          <div class="dia">${c.dia}</div>
-          <div class="mes">${c.mes}</div>
-        </div>
-        <div class="info-campanha">
-          <h3>${c.titulo}</h3>
-          <p>${c.desc}</p>
-        </div>
-      </div>
-    `).join("");
+function renderizarAgendaEnfermeira(){
+  document.getElementById("gridAgendaEnfermeira").innerHTML = DADOS.agendaEnfermeira.map(a=>`
+    <div class="agenda-card">
+      <div class="dia-semana">${a.dia}</div>
+      <div class="turno">Manhã</div>
+      <div class="atividade">${a.manha}</div>
+      <div class="turno">Tarde</div>
+      <div class="atividade">${a.tarde}</div>
+    </div>`).join("");
 }
 
-function renderizarAutocuidado() {
-  document.getElementById("gridAutocuidado").innerHTML =
-    DADOS.autocuidado.map((a, i) => `
-      <div class="card-autocuidado">
-        <div class="emoji">${a.emoji}</div>
-        <h3>${a.titulo}</h3>
-        <p>${a.resumo}</p>
-        <a class="btn-saiba" onclick="abrirModal(${i}); return false;" href="#autocuidado" role="button">Saiba mais</a>
-      </div>
-    `).join("");
+function renderizarAgendaEMulti(){
+  // Agrupa por dia
+  const dias = [...new Set(DADOS.agendaEMulti.map(a=>a.dia))];
+  document.getElementById("gridAgendaEMulti").innerHTML = dias.map(dia=>{
+    const itens = DADOS.agendaEMulti.filter(a=>a.dia===dia);
+    return `<div class="agenda-card">
+      <div class="dia-semana">${dia}</div>
+      ${itens.map(i=>`
+        <div class="turno">${i.turno} · ${i.profissional}</div>
+        <div class="atividade">${i.atividade}</div>`).join("")}
+    </div>`;
+  }).join("");
 }
 
-function renderizarContato() {
+function renderizarAgendaOdonto(){
+  document.getElementById("gridAgendaOdonto").innerHTML = DADOS.agendaOdonto.map(a=>`
+    <div class="agenda-card">
+      <div class="dia-semana">${a.dia} · ${a.data}</div>
+      <span class="horario-badge">Local Manhã</span>
+      <div class="atividade">${a.local}</div>
+      <div class="turno">Equipe: ${a.equipe}</div>
+    </div>`).join("");
+}
+
+function trocarAgenda(id, btn){
+  document.querySelectorAll(".agenda-painel").forEach(p=>p.classList.remove("ativo"));
+  document.querySelectorAll(".agenda-aba").forEach(b=>b.classList.remove("ativa"));
+  document.getElementById("agenda-"+id).classList.add("ativo");
+  btn.classList.add("ativa");
+}
+
+function renderizarServicos(){
+  const metade = Math.ceil(DADOS.servicos.length / 2);
+  document.getElementById("gridServicos").innerHTML = DADOS.servicos.map((s,i)=>`
+    <div class="card-servico${i >= metade ? ' oculto' : ''}">
+      <h3>${s.titulo}</h3><p>${s.desc}</p>
+    </div>`).join("");
+  if(DADOS.servicos.length > metade){
+    document.getElementById("btnVerMais").style.display = "block";
+  }
+}
+function verMaisServicos(){
+  document.querySelectorAll(".card-servico.oculto").forEach(c=>c.classList.remove("oculto"));
+  document.getElementById("btnVerMais").style.display = "none";
+}
+
+function renderizarCampanhas(){
+  document.getElementById("listaCampanhas").innerHTML = DADOS.campanhas.map(c=>`
+    <div class="item-campanha">
+      <div class="data-campanha"><div class="dia">${c.Dia}</div><div class="mes">${c.Mes}</div></div>
+      <div class="info-campanha"><h3>${c.Titulo}</h3><p>${c.Descricao}</p></div>
+    </div>`).join("");
+}
+
+function renderizarInformes(){
+  const track = document.getElementById("informesTrack");
+  if(!DADOS.informes||DADOS.informes.length===0){
+    track.innerHTML=`<p style="color:rgba(255,255,255,.5);padding:1rem;font-size:.9rem">Nenhum informe no momento.</p>`;
+    return;
+  }
+  track.innerHTML = DADOS.informes.map(i=>`
+    <div class="informe-card">
+      <img src="${i.url}" alt="${i.legenda||'Informe'}" onerror="this.src='https://i.ibb.co/TDD6xN4f/Icone-Nina.png'" />
+      ${i.legenda?`<div class="informe-leg"><p>${i.legenda}</p></div>`:""}
+    </div>`).join("");
+}
+
+function renderizarACS(){
+  document.getElementById("gridACS").innerHTML = DADOS.acs.map(a=>{
+    const iniciais = a.nome.split(" ").map(p=>p[0]).join("").substring(0,2).toUpperCase();
+    return `<div class="card-acs">
+      <div class="acs-avatar">${iniciais}</div>
+      <h3>${a.nome}</h3>
+      <div class="acs-area">${a.area}</div>
+      <a href="tel:${a.telefone.replace(/\D/g,"")}" aria-label="Ligar para ${a.nome}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.49 12 19.79 19.79 0 0 1 1.44 3.4 2 2 0 0 1 3.41 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.86-.86a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.74 16z"/></svg>
+        ${a.telefone}
+      </a>
+    </div>`;
+  }).join("");
+}
+
+function renderizarAutocuidado(){
+  document.getElementById("gridAutocuidado").innerHTML = DADOS.autocuidado.map((a,i)=>`
+    <div class="card-autocuidado">
+      <div class="emoji">${a.emoji}</div>
+      <h3>${a.titulo}</h3>
+      <p>${a.resumo}</p>
+      <a class="btn-saiba" onclick="abrirModal(${i});return false;" href="#autocuidado" role="button">Saiba mais</a>
+    </div>`).join("");
+}
+
+function renderizarContato(){
   const c = DADOS.contato;
-
-  const svgTelefone = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.49 12 19.79 19.79 0 0 1 1.44 3.4 2 2 0 0 1 3.41 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.86-.86a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.74 16z"/></svg>`;
-  const svgEndereco = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`;
-  const svgRelogio  = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`;
-  const svgMapa     = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>`;
-
-  document.getElementById("gridContato").innerHTML = `
-    <div class="card-contato">
-      <div class="icone-ct">${svgTelefone}</div>
-      <h3>Telefone</h3>
-      <p><a href="tel:${c.telefone.replace(/\D/g,"")}">${c.telefone}</a></p>
-    </div>
-    <div class="card-contato">
-      <div class="icone-ct">${svgEndereco}</div>
-      <h3>Endereço</h3>
-      <p>${c.endereco}</p>
-    </div>
-    <div class="card-contato">
-      <div class="icone-ct">${svgRelogio}</div>
-      <h3>Funcionamento</h3>
-      <p>${c.horarioFuncionamento}</p>
-    </div>
-    <div class="card-contato">
-      <div class="icone-ct">${svgMapa}</div>
-      <h3>Como chegar</h3>
-      <p><a href="${c.mapsLink}" target="_blank" rel="noopener">Abrir no Google Maps</a></p>
-    </div>
-  `;
+  const svgTel=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.49 12 19.79 19.79 0 0 1 1.44 3.4 2 2 0 0 1 3.41 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.86-.86a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.74 16z"/></svg>`;
+  const svgEnd=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`;
+  const svgRel=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`;
+  const svgMap=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>`;
+  document.getElementById("gridContato").innerHTML=`
+    <div class="card-contato"><div class="icone-ct">${svgTel}</div><h3>Telefone</h3><p><a href="tel:${c.telefone.replace(/\D/g,"")}">${c.telefone}</a></p></div>
+    <div class="card-contato"><div class="icone-ct">${svgEnd}</div><h3>Endereço</h3><p>${c.endereco}</p></div>
+    <div class="card-contato"><div class="icone-ct">${svgRel}</div><h3>Funcionamento</h3><p>${c.horarioFuncionamento}</p></div>
+    <div class="card-contato"><div class="icone-ct">${svgMap}</div><h3>Como chegar</h3><p><a href="${c.mapsLink}" target="_blank" rel="noopener">Abrir no Google Maps</a></p></div>`;
 }
 
-/* ----------------------------------------------------------------
-   MODAL
----------------------------------------------------------------- */
-function abrirModal(i) {
-  const a = DADOS.autocuidado[i];
-  document.getElementById("modalConteudo").innerHTML = `
-    <h2>${a.emoji} ${a.titulo}</h2>
-    <ul>${a.dicas.map(d => `<li>${d}</li>`).join("")}</ul>
-  `;
+/* ── CARROSSEL ── */
+function moverCarrossel(dir){
+  const track = document.getElementById("carrosselTrack");
+  track.scrollBy({left: dir * 160, behavior:"smooth"});
+}
+function iniciarDots(){
+  const track = document.getElementById("carrosselTrack");
+  const dots  = document.getElementById("carrosselDots");
+  const cards = track.querySelectorAll(".card-icone");
+  dots.innerHTML = Array.from(cards).map((_,i)=>`<span${i===0?" class='ativo'":""}></span>`).join("");
+  track.addEventListener("scroll",()=>{
+    const idx = Math.round(track.scrollLeft/(track.scrollWidth/cards.length));
+    dots.querySelectorAll("span").forEach((s,i)=>s.classList.toggle("ativo",i===idx));
+  },{passive:true});
+}
+
+/* ── MODAL ── */
+function abrirModal(i){
+  const a=DADOS.autocuidado[i];
+  document.getElementById("modalConteudo").innerHTML=`<h2>${a.emoji} ${a.titulo}</h2><ul>${a.dicas.map(d=>`<li>${d}</li>`).join("")}</ul>`;
   document.getElementById("modalOverlay").classList.add("aberto");
-  document.body.style.overflow = "hidden";
-  // impede qualquer rolagem da página ao abrir o modal
-  event && event.preventDefault && event.preventDefault();
+  document.body.style.overflow="hidden";
+  event&&event.preventDefault&&event.preventDefault();
   return false;
 }
-function fecharModal(e) {
-  if (!e || e.target === document.getElementById("modalOverlay") || e.type === "click" && !e.target.closest(".modal-box")) {
+function fecharModal(e){
+  if(!e||e.target===document.getElementById("modalOverlay")||e.type==="click"&&!e.target.closest(".modal-box")){
     document.getElementById("modalOverlay").classList.remove("aberto");
-    document.body.style.overflow = "";
+    document.body.style.overflow="";
   }
 }
 
-/* ----------------------------------------------------------------
-   MENU MOBILE
----------------------------------------------------------------- */
-function toggleMenu() {
-  document.getElementById("mobileMenu").classList.toggle("aberto");
-}
+/* ── MENU MOBILE ── */
+function toggleMenu(){document.getElementById("mobileMenu").classList.toggle("aberto")}
 
-/* ----------------------------------------------------------------
-   PWA – INSTALAR
----------------------------------------------------------------- */
-let deferredPrompt = null;
-window.addEventListener("beforeinstallprompt", e => {
-  e.preventDefault();
-  deferredPrompt = e;
-  document.getElementById("instrucaoInstalar").textContent = "";
-});
-
-function instalarApp() {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
-  } else {
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    const instrucao = isIOS
-      ? "No iPhone/iPad: toque no ícone de compartilhar (□↑) e depois em 'Adicionar à Tela de Início'."
-      : "No Android: abra o menu do navegador (⋮) e toque em 'Adicionar à tela inicial'.";
-    document.getElementById("instrucaoInstalar").textContent = instrucao;
+/* ── PWA ── */
+let deferredPrompt=null;
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e;document.getElementById("instrucaoInstalar").textContent=""});
+function instalarApp(){
+  if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>{deferredPrompt=null});}
+  else{
+    const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent);
+    document.getElementById("instrucaoInstalar").textContent=isIOS
+      ?"No iPhone/iPad: toque em compartilhar (□↑) e depois em 'Adicionar à Tela de Início'."
+      :"No Android: abra o menu (⋮) e toque em 'Adicionar à tela inicial'.";
   }
 }
 
-/* ----------------------------------------------------------------
-   INIT
----------------------------------------------------------------- */
-window.addEventListener("load", () => {
+/* ── INIT ── */
+window.addEventListener("load",()=>{
   renderizarHorarios();
+  renderizarAgendaMedica();
+  renderizarAgendaEnfermeira();
+  renderizarAgendaEMulti();
+  renderizarAgendaOdonto();
   renderizarServicos();
   renderizarCampanhas();
+  renderizarInformes();
+  renderizarACS();
   renderizarAutocuidado();
   renderizarContato();
-
-  // esconde loading
-  const loading = document.getElementById("loading");
-  loading.style.opacity = "0";
-  setTimeout(() => loading.style.display = "none", 350);
+  iniciarDots();
+  const loading=document.getElementById("loading");
+  loading.style.opacity="0";
+  setTimeout(()=>loading.style.display="none",350);
 });
 </script>
-
-<!-- Service Worker registro -->
 <script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/public/sw.js").catch(() => {});
-  });
-}
+if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("/public/sw.js").catch(()=>{})})}
 </script>
-
 </body>
 </html>
