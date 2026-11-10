@@ -1,0 +1,26 @@
+{
+  "name": "Nina Comunica",
+  "short_name": "Nina Comunica",
+  "description": "Sua UBS Nina Liberato mais perto de você",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2C2E5F",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["health", "medical"],
+  "lang": "pt-BR"
+}
