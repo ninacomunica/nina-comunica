@@ -186,10 +186,14 @@
     .card-acs .acs-avatar{width:52px;height:52px;border-radius:50%;background:var(--azul);
       color:var(--branco);font-family:var(--ff-t);font-weight:800;font-size:1.2rem;
       display:flex;align-items:center;justify-content:center;margin-bottom:.75rem}
-    .acs-rosa  { background:#E91E8C !important; border-top-color:#E91E8C !important; }
-    .acs-amarelo { background:#F5A623 !important; border-top-color:#F5A623 !important; }
-    .acs-laranja { background:#F26522 !important; border-top-color:#F26522 !important; }
-    .acs-vermelho { background:#E02020 !important; border-top-color:#E02020 !important; }
+    .card-acs.acs-rosa    { border-top-color: var(--verde); }
+    .card-acs.acs-amarelo { border-top-color: var(--verde); }
+    .card-acs.acs-laranja { border-top-color: var(--verde); }
+    .card-acs.acs-vermelho{ border-top-color: var(--verde); }
+    .acs-avatar.acs-rosa    { background: #E91E8C !important; }
+    .acs-avatar.acs-amarelo { background: #F5A623 !important; }
+    .acs-avatar.acs-laranja { background: #F26522 !important; }
+    .acs-avatar.acs-vermelho{ background: #E02020 !important; }
     .card-acs h3{font-family:var(--ff-t);font-weight:800;font-size:.95rem;color:var(--azul);margin-bottom:.2rem}
     .card-acs .acs-area{font-size:.8rem;color:var(--sub);margin-bottom:.6rem;line-height:1.5}
     .card-acs a{display:inline-flex;align-items:center;gap:.35rem;font-family:var(--ff-t);
@@ -729,9 +733,8 @@ function renderizarInformes(){
 
 function renderizarACS(){
   document.getElementById("gridACS").innerHTML = DADOS.acs.map(a=>{
-    const iniciais = a.nome.split(" ").map(p=>p[0]).join("").substring(0,2).toUpperCase();
     return `<div class="card-acs ${a.cor}">
-      <div class="acs-avatar ${a.cor}">${iniciais}</div>
+      <div class="acs-avatar ${a.cor}">${a.microarea}</div>
       <h3>${a.nome}</h3>
       <div class="acs-area">${a.area}</div>
       <a href="tel:${a.telefone.replace(/\D/g,"")}" aria-label="Ligar para ${a.nome}">
