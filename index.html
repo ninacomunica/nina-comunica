@@ -179,26 +179,27 @@
       color:var(--verde-m);font-size:.75rem;font-weight:700;padding:.15rem .5rem;border-radius:999px;margin-bottom:.4rem}
 
     /* ── ACS ── */
-    .grid-acs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
+    .grid-acs{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
     .card-acs{background:var(--branco);border-radius:var(--r-md);padding:1.5rem 1.25rem;
-      box-shadow:var(--shadow);border-top:4px solid var(--verde);transition:transform .15s}
+      box-shadow:var(--shadow);border-top:4px solid var(--verde);transition:transform .15s;
+      position:relative;overflow:hidden}
     .card-acs:hover{transform:translateY(-2px)}
-    .card-acs .acs-avatar{width:52px;height:52px;border-radius:50%;background:var(--azul);
-      color:var(--branco);font-family:var(--ff-t);font-weight:800;font-size:1.2rem;
-      display:flex;align-items:center;justify-content:center;margin-bottom:.75rem}
-    .card-acs.acs-rosa    { border-top-color: var(--verde); }
-    .card-acs.acs-amarelo { border-top-color: var(--verde); }
-    .card-acs.acs-laranja { border-top-color: var(--verde); }
-    .card-acs.acs-vermelho{ border-top-color: var(--verde); }
+    /* número decorativo grande no fundo */
+    .card-acs .acs-bg-num{position:absolute;right:-.5rem;top:50%;transform:translateY(-50%);
+      font-family:var(--ff-t);font-weight:900;font-size:6rem;color:rgba(44,46,95,.07);
+      line-height:1;pointer-events:none;user-select:none;letter-spacing:-.02em}
+    .card-acs .acs-avatar{width:62px;height:62px;border-radius:50%;background:var(--azul);
+      color:var(--branco);font-family:var(--ff-t);font-weight:800;font-size:1.3rem;
+      display:flex;align-items:center;justify-content:center;margin-bottom:.85rem}
     .acs-avatar.acs-rosa    { background: #E91E8C !important; }
     .acs-avatar.acs-amarelo { background: #F5A623 !important; }
     .acs-avatar.acs-laranja { background: #F26522 !important; }
     .acs-avatar.acs-vermelho{ background: #E02020 !important; }
-    .card-acs h3{font-family:var(--ff-t);font-weight:800;font-size:.95rem;color:var(--azul);margin-bottom:.2rem}
-    .card-acs .acs-area{font-size:.8rem;color:var(--sub);margin-bottom:.6rem;line-height:1.5}
-    .card-acs a{display:inline-flex;align-items:center;gap:.35rem;font-family:var(--ff-t);
-      font-weight:700;font-size:.85rem;color:var(--verde-m)}
-    .card-acs a svg{width:14px;height:14px}
+    .card-acs h3{font-family:var(--ff-t);font-weight:800;font-size:1.2rem;color:var(--azul);margin-bottom:.25rem}
+    .card-acs .acs-area{font-size:.95rem;color:var(--sub);margin-bottom:.75rem;line-height:1.5}
+    .card-acs a{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--ff-t);
+      font-weight:700;font-size:1rem;color:var(--verde-m)}
+    .card-acs a svg{width:16px;height:16px}
 
     /* ── INFORMES (carrossel de imagens) ── */
     .informes-track{display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;
@@ -734,6 +735,7 @@ function renderizarInformes(){
 function renderizarACS(){
   document.getElementById("gridACS").innerHTML = DADOS.acs.map(a=>{
     return `<div class="card-acs ${a.cor}">
+      <div class="acs-bg-num">${a.microarea}</div>
       <div class="acs-avatar ${a.cor}">${a.microarea}</div>
       <h3>${a.nome}</h3>
       <div class="acs-area">${a.area}</div>
