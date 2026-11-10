@@ -7,8 +7,8 @@
   <meta name="description" content="Nina Comunica – Sua Unidade Básica de Saúde mais perto de você. Informações sobre horários, serviços, campanhas e autocuidado da UBS Nina Liberato." />
 
   <!-- PWA -->
-  <link rel="manifest" href="/manifest.json" />
-  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+  <link rel="manifest" href="/public/manifest.json" />
+  <link rel="apple-touch-icon" href="/public/icons/icon-192.png" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="Nina Comunica" />
@@ -1245,7 +1245,7 @@ window.addEventListener("load", () => {
 <script>
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/sw.js").catch(() => {});
+    navigator.serviceWorker.register("/public/sw.js").catch(() => {});
   });
 }
 </script>
